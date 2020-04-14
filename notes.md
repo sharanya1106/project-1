@@ -12,3 +12,11 @@
 *I have the flsk and navigated to the URL provided by the flask, but i didn't see the output. I have tried many times but it did not worked.
 * I have discussed it with my friends and found a solution. This time it worked.
 *I took around 40 mins in total for this task.
+
+-->Task-3
+* As, I didn,t have an account. I have registerd in to Goodreads.
+* I have followed the steps which was given in the project1 link and noted the generated Key.
+*As, the python code was provided, I have used the code and replaced the "KEY".
+*I have got the output, which was shown in the project1 link.
+* I have installed pip requests for this task.
+*I took around 30 mins to complete this task.
