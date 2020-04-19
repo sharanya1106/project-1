@@ -6,11 +6,12 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from data import *
 
 app = Flask(__name__)
+if not os.getenv("DATABASE_URL"):
+    raise RuntimeError("DATABASE_URL is not set")
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-if not os.getenv("DATABASE_URL"):
-    raise RuntimeError("DATABASE_URL is not set")
+
 
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
@@ -30,15 +31,18 @@ session = Session()
 def test():
     return redirect("/register")
 
+@app.route("/admin")
+def admin():
+    allusersdata = User.query.all()
+    return render_template("admin.html", admin = allusersdata)
+
 @app.route('/register', methods = ['POST', 'GET'])
 def register_method():
     db.create_all()
     if request.method == 'POST':
         userdata = User(request.form["username"], request.form["pswd"])
         user = User.query.filter_by(username=request.form['username']).first()
-        if user is not None:
-
-            
+        if user is not None:            
             var = "Error: User already exists. Try with another Username or Register with if you are new user"
             return render_template("reg_page.html", msg =var)
         db.session.add(userdata)
