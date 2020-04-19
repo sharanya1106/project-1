@@ -6,3 +6,10 @@
 * I have faced problem while connecting application.py to data.py and fixed the problem by checking the code.
 * I have took around 4 hrs to complete this task.
 Reference:https://hackersandslackers.com/flask-sqlalchemy-database-models/
+
+--->Task 2:
+* I have added alert messages  in the Registration.html for better understanding  of user 
+* In applications.py i have added two messages for the proper creation and an error message if the user already exists or user entered any wrong message
+* I have created objects in registration form and assigned in applications.py for the messages 
+* I have took around 1 hr to complete this task.
+
