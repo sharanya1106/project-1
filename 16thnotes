@@ -1,0 +1,8 @@
+--->task 1:
+* created class user for the creation of the  database 
+* Initiated basic constructor for the variables name and password
+* Assigned primary keys for the variable which should be unique like name and password is nullable because there sholud be entered something.
+* Fixed environment for database using getnv, created configuration session and set up the database
+* I have faced problem while connecting application.py to data.py and fixed the problem by checking the code.
+* I have took around 4 hrs to complete this task.
+Reference:https://hackersandslackers.com/flask-sqlalchemy-database-models/
