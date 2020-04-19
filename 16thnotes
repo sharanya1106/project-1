@@ -13,3 +13,10 @@ Reference:https://hackersandslackers.com/flask-sqlalchemy-database-models/
 * I have created objects in registration form and assigned in applications.py for the messages 
 * I have took around 1 hr to complete this task.
 
+--->Task 3:
+* Created admin html page to display the records from the database
+* In data.py I have added timestamp record
+* I have created route for admin for checking the details about registered users
+* Adminer-- went to the table  i created and altered my table by adding timestamp
+* Initially password didnot displayed on the table, i have made changes in the code accordingly and fixed the problem
+* I have took around 2 hrs to complete the task.
