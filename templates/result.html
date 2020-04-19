@@ -1,0 +1,12 @@
+<!doctype html>
+<html>
+   <body>
+         {% for key, value in result.items() %}
+            <tr>
+                {% if key == "username" %}
+               <p> {{value}} registered successfully.</p>
+               {% endif %}
+            </tr>
+         {% endfor %}
+   </body>
+</html>
