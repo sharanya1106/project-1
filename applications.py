@@ -4,6 +4,9 @@ from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from data import *
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
 if not os.getenv("DATABASE_URL"):
@@ -24,8 +27,8 @@ db.init_app(app)
 # db.create_all()
 
 engine = create_engine(os.getenv("DATABASE_URL"))
-Session = scoped_session(sessionmaker(bind=engine))
-session = Session()
+# Session = scoped_session(sessionmaker(bind=engine))
+# session = Session()
 
 @app.route('/')
 def test():
@@ -43,7 +46,7 @@ def register_method():
         userdata = User(request.form["username"], request.form["pswd"])
         user = User.query.filter_by(username=request.form['username']).first()
         if user is not None:            
-            var = "Error: User already exists. Try with another Username or Register with if you are new user"
+            var = "Error: User already exists. Try with another Username or Register if you are new user"
             return render_template("reg_page.html", msg =var)
         db.session.add(userdata)
         db.session.commit()
@@ -54,3 +57,39 @@ def register_method():
         return render_template("reg_page.html", msg1 = var)
     else:
         return render_template("reg_page.html")
+
+@app.route("/auth", methods =['POST'])
+def authenication():
+    users = Users.query.filter_by(username = request.form['username']).first()
+    if users is not None:
+        if request.form['pswd'] == users.pswd:
+            session["username"]=request.form["username"]
+            return redirect("/homepage")
+        else:
+            var = "Incorrect Credentials"
+            return render_template("reg_page.html", var = var)
+    else:
+        var = "You are not a registered user"
+        return render_template("reg_page.html", var = var)
+
+
+@app.route("/homepage")
+def homepage():
+    try:
+        users = session["username"]
+        return render_template("login.html")
+    except:
+        var = "login to view the homepage"
+        return render_template("Registration.html",var = var)
+
+@app.route("/logout")
+def logout():
+    try:
+        users = session["username"]
+        session.clear()
+        var = "Logged out Successful"
+        return render_template("reg_page.html",var = var)
+    except:
+        var = "You have to login to logout"
+        return render_template("reg_page.html",var = var)
+
