@@ -1,17 +1,24 @@
-from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+import os, csv
+from bookdatabase import *
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
 
-db1 = SQLAlchemy()
+if not os.getenv("DATABASE_URL"):
+    raise RuntimeError("DATABASE_URL is not set")
 
-class Book(db1.Model):
-    __tablename__ = "book"
-    isbn = db1.Column(db1.String, primary_key = True)
-    title = db1.Column(db1.String, nullable = False)
-    author = db1.Column(db1.String, nullable = False)
-    year = db1.Column(db1.String, nullable = False)
+engine = create_engine(os.getenv("DATABASE_URL"))
+db = scoped_session(sessionmaker(bind=engine))
 
-    def __init__(self, isbn, title,author,year):
-        self.isbn = isbn
-        self.title = title
-        self.author = author
-        self.year = year
+def main():
+    Base.metadata.create_all(bind=engine)
+    f=open("books.csv")
+    reader=csv.reader(f)
+    next(reader)
+    for isbn,title,author,year in reader:
+        book = Books(isbn = isbn,title=title,author=author,year=int(year))
+        db.add(book)
+    db.commit()
+    db.close()
+
+if __name__ == '__main__':
+    main()
