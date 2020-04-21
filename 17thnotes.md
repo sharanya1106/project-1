@@ -5,6 +5,3 @@
 *added routes for authentication, login and home
 *validated the page with different error messages. 
 * I have took around 4 hrs to complete the task.
-
-
---->Task2
