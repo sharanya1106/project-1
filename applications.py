@@ -60,17 +60,17 @@ def register_method():
 
 @app.route("/auth", methods =['POST'])
 def authenication():
-    users = Users.query.filter_by(username = request.form['username']).first()
+    users = User.query.filter_by(username = request.form['username']).first()
     if users is not None:
         if request.form['pswd'] == users.pswd:
             session["username"]=request.form["username"]
             return redirect("/homepage")
         else:
             var = "Incorrect Credentials"
-            return render_template("reg_page.html", var = var)
+            return render_template("reg_page.html", msg = var)
     else:
         var = "You are not a registered user"
-        return render_template("reg_page.html", var = var)
+        return render_template("reg_page.html", msg = var)
 
 
 @app.route("/homepage")
@@ -80,16 +80,15 @@ def homepage():
         return render_template("login.html")
     except:
         var = "login to view the homepage"
-        return render_template("Registration.html",var = var)
+        return render_template("reg_page.html",msg = var)
 
 @app.route("/logout")
 def logout():
     try:
-        users = session["username"]
         session.clear()
         var = "Logged out Successful"
-        return render_template("reg_page.html",var = var)
+        return render_template("reg_page.html",msg = var)
     except:
         var = "You have to login to logout"
-        return render_template("reg_page.html",var = var)
+        return render_template("reg_page.html",msg = var)
 
